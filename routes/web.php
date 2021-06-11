@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,4 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {return view('welcome');});
+Route::get('/', function () {
+    return view('home');
+});
+
+Auth::routes();
+
+Route::get('/home', [ HomeController::class, 'index' ])->name('index');
+
+/**
+ * The Group routes
+ */
+
+Route::get('/groups/create', [ GroupController::class, 'create' ])->name('create');
+Route::get('/groups', [ GroupController::class, 'index' ])->name('index');
+Route::post('/groups', [ GroupController::class, 'store' ])->name('store');
+Route::get('/groups/{group}', [ GroupController::class, 'show' ])->name('show');
+Route::get('/groups/edit/{group}', [ GroupController::class, 'edit' ])->name('edit');
+Route::post('/groups/{group}', [ GroupController::class, 'update' ])->name('update');
+Route::get('/groups/delete/{group}', [ GroupController::class, 'destroy' ])->name('destroy');
