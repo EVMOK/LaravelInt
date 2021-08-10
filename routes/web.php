@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\HomeController;
@@ -23,6 +24,12 @@ Auth::routes();
 
 Route::get('/home', [ HomeController::class, 'index' ])->name('index');
 
+Route::get('/profile', [ HomeController::class, 'profile' ])->name('profile');
+Route::get('/profile/edit', [ HomeController::class, 'profileEdit' ])->name('profile.edit');
+Route::put('/profile/update', [ HomeController::class, 'profileUpdate' ])->name('profile.update');
+Route::get('/profile/changepassword', [ HomeController::class, 'changePasswordForm' ])->name('profile.change.password');
+Route::post('/profile/changepassword', [ HomeController::class, 'changePassword' ])->name('profile.changepassword');
+
 /**
  * The Group routes
  */
@@ -33,3 +40,10 @@ Route::get('/groups/{group}', [ GroupController::class, 'show' ])->name('groups.
 Route::patch('/groups/{group}', [ GroupController::class, 'edit' ])->name('groups.edit');
 Route::put('/groups/{group}', [ GroupController::class, 'update' ])->name('groups.update');
 Route::delete('/groups/{group}', [ GroupController::class, 'destroy' ])->name('groups.destroy');
+
+
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

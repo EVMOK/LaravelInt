@@ -30,6 +30,7 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('group_id');
             $table->date('date_born');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
             $table->index('name');
@@ -37,6 +38,9 @@ class CreateStudentsTable extends Migration
 
             $table->foreign('group_id')
                 ->references('id')->on('groups');
+
+            $table->foreign('user_id')
+                ->references('id')->on('users');
         });
     }
 
@@ -49,6 +53,7 @@ class CreateStudentsTable extends Migration
     {
         $table = new Blueprint('students');
         $table->dropForeign('students_group_id_foreign');
+        $table->dropForeign('students_user_id_foreign');
 
         Schema::dropIfExists('students');
     }
