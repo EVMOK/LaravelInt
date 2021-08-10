@@ -19,7 +19,7 @@
                     @foreach ($groups as $group)
                         <tr>
                             <td>{{ $group->id }}</td>
-                            <td>{{ $group->name }}</td>
+                            <td><a href="/groups/show/{{ $group->id }}">{{ $group->name }}</a></td>
                             <td><a href="/groups/edit/{{ $group->id }}"><button type="button" class="btn btn-priamry">Редактировать</button></a></td>
                             <td><a href="/groups/delete/{{ $group->id }}"><button type="button" class="btn btn-danger">Удалить</button></a></td>
                         </tr>

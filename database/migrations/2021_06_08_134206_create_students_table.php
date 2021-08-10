@@ -28,13 +28,15 @@ class CreateStudentsTable extends Migration
             $table->collation = 'utf8mb4_unicode_ci';
             $table->id();
             $table->string('name');
-            $table->integer('group_id');
+            $table->unsignedBigInteger('group_id');
             $table->date('date_born');
             $table->timestamps();
 
             $table->index('name');
-            $table->index('group_id');
             $table->index('date_born');
+
+            $table->foreign('group_id')
+                ->references('id')->on('groups');
         });
     }
 
@@ -45,6 +47,9 @@ class CreateStudentsTable extends Migration
      */
     public function down()
     {
+        $table = new Blueprint('students');
+        $table->dropForeign('students_group_id_foreign');
+
         Schema::dropIfExists('students');
     }
 }

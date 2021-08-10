@@ -18,7 +18,7 @@
                     <legend>Редактировать</legend>
 
                     <div class="form-group">
-                        <input name="name" type="text" class="form-control" id="" value="{{ $group->name }}">
+                        <label for="">Наименование</label><input name="name" type="text" class="form-control" id="" value="{{ $group->name }}">
                     </div>
 
 

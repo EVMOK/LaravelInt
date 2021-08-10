@@ -26,11 +26,10 @@ Route::get('/home', [ HomeController::class, 'index' ])->name('index');
 /**
  * The Group routes
  */
-
-Route::get('/groups/create', [ GroupController::class, 'create' ])->name('create');
-Route::get('/groups', [ GroupController::class, 'index' ])->name('index');
-Route::post('/groups', [ GroupController::class, 'store' ])->name('store');
-Route::get('/groups/{group}', [ GroupController::class, 'show' ])->name('show');
-Route::get('/groups/edit/{group}', [ GroupController::class, 'edit' ])->name('edit');
-Route::post('/groups/{group}', [ GroupController::class, 'update' ])->name('update');
-Route::get('/groups/delete/{group}', [ GroupController::class, 'destroy' ])->name('destroy');
+Route::get('/groups/create', [ GroupController::class, 'create' ])->name('groups.create');
+Route::get('/groups', [ GroupController::class, 'index' ])->name('groups.index');
+Route::post('/groups', [ GroupController::class, 'store' ])->name('groups.store');
+Route::get('/groups/{group}', [ GroupController::class, 'show' ])->name('groups.show');
+Route::patch('/groups/{group}', [ GroupController::class, 'edit' ])->name('groups.edit');
+Route::put('/groups/{group}', [ GroupController::class, 'update' ])->name('groups.update');
+Route::delete('/groups/{group}', [ GroupController::class, 'destroy' ])->name('groups.destroy');

@@ -4,56 +4,42 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGroupRequest;
 use App\Models\Group;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 
 class GroupController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): Factory|View|Application
     {
-        //
-
         $groups = Group::all();
 
-        //return $groups;
-
         return view('groups.index', compact('groups'));
-
-
-
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Factory|View|Application
     {
-        //
-
-
         return view('groups.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store( StoreGroupRequest $request )
+    public function store(StoreGroupRequest $request): Redirector|Application|RedirectResponse
     {
-        //
-        $validated = $request->validated();
-
-        print_r ($validated);
-
         Group::create(request(['name']));
 
         return redirect('/groups');
@@ -62,8 +48,7 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Group  $group
-     * @return \Illuminate\Http\Response
+     * @param Group $group
      */
     public function show(Group $group)
     {
@@ -73,26 +58,21 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Group  $group
-     * @return \Illuminate\Http\Response
+     * @param Group $group
      */
-    public function edit(Group $group)
+    public function edit(Group $group): Factory|View|Application
     {
-        //
         return view('groups.edit', compact('group'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Group  $group
-     * @return \Illuminate\Http\Response
+     * @param Group $group
+     * @return Redirector|Application|RedirectResponse
      */
-    public function update(Group $group)
+    public function update(Group $group): Redirector|Application|RedirectResponse
     {
-        //
-
         $input = request(['name']);
 
         $group->fill($input)->save();
@@ -103,17 +83,12 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Group  $group
-     * @return \Illuminate\Http\Response
+     * @param Group $group
      */
-    public function destroy(Group $group)
+    public function destroy(Group $group): Redirector|Application|RedirectResponse
     {
-        //
-
         $group->delete();
 
         return redirect('/groups');
-
-
     }
 }
