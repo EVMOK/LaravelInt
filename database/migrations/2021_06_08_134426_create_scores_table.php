@@ -28,18 +28,19 @@ class CreateScoresTable extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
             $table->id();
-            $table->integer('student_id');
-            $table->integer('group_id');
-            $table->integer('value');
+            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('group_id');
+            $table->tinyInteger('value')->unsigned();
             $table->timestamps();
 
-            $table->index('student_id');
-            $table->index('group_id');
             $table->index('value');
 
             $table->foreign('student_id')
                 ->references('id')->on('students')
                 ->onDelete('cascade');
+
+            $table->foreign('group_id')
+                ->references('id')->on('groups');
         });
     }
 
@@ -50,6 +51,10 @@ class CreateScoresTable extends Migration
      */
     public function down()
     {
+        $table = new Blueprint('scores');
+        $table->dropForeign('scores_student_id_foreign');
+        $table->dropForeign('scores_group_id_foreign');
+
         Schema::dropIfExists('scores');
     }
 }
