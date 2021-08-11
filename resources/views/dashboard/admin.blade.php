@@ -4,8 +4,8 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="/groups">Группы</a></li>
-                    <li><a href="/students">Студенты</a></li>
+                    <li><a href="{{ route('groups.index') }}">Группы</a></li>
+                    <li><a href="{{ route('students.index') }}">Студенты</a></li>
                 </ul>
             </div>
         </h3>

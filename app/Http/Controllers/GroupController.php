@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGroupRequest;
 use App\Models\Group;
+use App\Models\Student;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -22,7 +23,7 @@ class GroupController extends Controller
      */
     public function index(): Factory|View|Application
     {
-        $groups = Group::all();
+        $groups = Group::withCount('students')->paginate(10);
 
         return view('groups.index', compact('groups'));
     }
@@ -52,7 +53,9 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        //
+        $students = Student::with('group')->latest()->paginate(8);
+
+        return view('groups.show', compact('students'));
     }
 
     /**

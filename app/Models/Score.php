@@ -21,7 +21,7 @@ class Score extends Model
      *
      * @var array
      */
-    protected $fillable = ['student_id', 'group_id', 'value'];
+    protected $fillable = ['student_id', 'discipline_id', 'value'];
 
     public $timestamps = true;
 
@@ -31,5 +31,10 @@ class Score extends Model
     public function discipline()
     {
         return $this->belongsTo(Discipline::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
     }
 }

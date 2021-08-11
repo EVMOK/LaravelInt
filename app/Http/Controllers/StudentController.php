@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Discipline;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
@@ -29,7 +30,7 @@ class StudentController extends Controller
      */
     public function create(): Factory|View|Application
     {
-        return view('backend.students.create');
+        return view('students.create');
     }
 
     /**
@@ -43,14 +44,8 @@ class StudentController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'parent_id' => 'required|numeric',
-            'class_id' => 'required|numeric',
-            'roll_number' => 'required|numeric|unique:students',
-            'gender' => 'required|string',
-            'phone' => 'required|string|max:255',
-            'dateofbirth' => 'required|date',
-            'current_address' => 'required|string|max:255',
-            'permanent_address' => 'required|string|max:255'
+            'group_id' => 'required|numeric',
+            'date_born' => 'required|date',
         ]);
 
         $user = User::create([
@@ -60,14 +55,8 @@ class StudentController extends Controller
         ]);
 
         $user->student()->create([
-            'parent_id' => $request->parent_id,
-            'class_id' => $request->class_id,
-            'roll_number' => $request->roll_number,
-            'gender' => $request->gender,
-            'phone' => $request->phone,
-            'dateofbirth' => $request->dateofbirth,
-            'current_address' => $request->current_address,
-            'permanent_address' => $request->permanent_address
+            'group_id' => $request->group_id,
+            'date_born' => $request->date_born,
         ]);
 
         $user->assignRole('Student');
@@ -82,9 +71,9 @@ class StudentController extends Controller
      */
     public function show(Student $student): View|Factory|Application
     {
-        $class = Grade::with('subjects')->where('id', $student->class_id)->first();
+        $class = Discipline::with('score')->where('id', $student->group_id)->first();
 
-        return view('backend.students.show', compact('class', 'student'));
+        return view('students.show', compact('class', 'student'));
     }
 
     /**
@@ -95,7 +84,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student): Factory|View|Application
     {
-        return view('backend.students.edit', compact('classes', 'parents', 'student'));
+        return view('students.edit', compact('student'));
     }
 
     /**

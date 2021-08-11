@@ -19,14 +19,14 @@ class RolePermissionController extends Controller
     {
         $roles = Role::with('permissions')->get();
 
-        return view('backend.roles.index', compact('roles'));
+        return view('roles.index', compact('roles'));
     }
 
     public function createRole()
     {
         $permissions = Permission::latest()->get();
 
-        return view('backend.roles.create', compact('permissions'));
+        return view('roles.create', compact('permissions'));
     }
 
     public function storeRole(Request $request)
@@ -47,7 +47,7 @@ class RolePermissionController extends Controller
         $role = Role::with('permissions')->find($id);
         $permissions = Permission::latest()->get();
 
-        return view('backend.roles.edit', compact('role','permissions'));
+        return view('roles.edit', compact('role','permissions'));
     }
 
     public function updateRole(Request $request, $id)
@@ -71,7 +71,7 @@ class RolePermissionController extends Controller
         $roles = Role::latest()->get();
         $permissions = Permission::latest()->get();
 
-        return view('backend.permissions.create', compact('roles','permissions'));
+        return view('permissions.create', compact('roles','permissions'));
     }
 
     public function storePermission(Request $request)
@@ -86,7 +86,7 @@ class RolePermissionController extends Controller
         $roles = Role::latest()->get();
         $permissions = Permission::latest()->get();
 
-        return view('backend.permissions.create', compact('roles','permissions'));
+        return view('permissions.create', compact('roles','permissions'));
     }
 
     public function editPermission($id): Factory|View|Application
@@ -94,7 +94,7 @@ class RolePermissionController extends Controller
         $permission = Permission::with('roles')->find($id);
         $roles = Role::latest()->get();
 
-        return view('backend.permissions.edit', compact('roles','permission'));
+        return view('permissions.edit', compact('roles','permission'));
     }
 
     public function updatePermission(Request $request, $id): RedirectResponse
