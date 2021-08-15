@@ -136,4 +136,13 @@ class StudentController extends Controller
 
         return back();
     }
+
+    public function journal()
+    {
+        $scores = Score::with(['discipline', 'student']);
+        $disciplines = Discipline::all();
+        $students = Student::all();
+
+        return view('students.journal', compact('scores', 'disciplines', 'students'));
+    }
 }
