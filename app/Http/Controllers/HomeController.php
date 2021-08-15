@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\ProfileRequest;
 use App\Models\Student;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Request;
 
 class HomeController extends Controller
 {
@@ -60,13 +62,8 @@ class HomeController extends Controller
         return view('profile.edit');
     }
 
-    public function profileUpdate(Request $request)
+    public function profileUpdate(ProfileRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name'  => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.auth()->id()
-        ]);
-
         $user = auth()->user();
 
         $user->update([
@@ -85,7 +82,7 @@ class HomeController extends Controller
         return view('profile.changepassword');
     }
 
-    public function changePassword(Request $request)
+    public function changePassword(ChangePasswordRequest $request)
     {
         if (!(Hash::check($request->get('currentpassword'), Auth::user()->password))) {
             return back()->with([
@@ -97,11 +94,6 @@ class HomeController extends Controller
                 'msg_currentpassword' => 'New Password cannot be same as your current password! Please choose a different password.'
             ]);
         }
-
-        $this->validate($request, [
-            'currentpassword' => 'required',
-            'newpassword'     => 'required|string|min:8|confirmed',
-        ]);
 
         $user = Auth::user();
 

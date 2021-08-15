@@ -24,4 +24,9 @@ class Discipline extends Model
     protected $fillable = ['name'];
 
     public $timestamps = true;
+
+    public static function disciplinesList(): array
+    {
+        return self::pluck('name', 'id')->toArray();
+    }
 }

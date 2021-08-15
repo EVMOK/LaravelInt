@@ -19,9 +19,9 @@
                     @foreach ($students as $student)
                         <tr>
                             <td>{{ $student->id }}</td>
-                            <td><a href="/students/show/{{ $student->id }}">{{ $student->name }}</a></td>
-                            <td><a href="/students/edit/{{ $student->id }}"><button type="button" class="btn btn-priamry">Редактировать</button></a></td>
-                            <td><a href="/students/delete/{{ $student->id }}"><button type="button" class="btn btn-danger">Удалить</button></a></td>
+                            <td><a href="{{ route('students.show', ['student' => $student->id]) }}">{{ $student->name }}</a></td>
+                            <td><a href="{{ route('students.edit', ['student' => $student->id]) }}"><button type="button" class="btn btn-priamry">Редактировать</button></a></td>
+                            <td><a href="{{ route('students.delete', ['student' => $student->id]) }}"><button type="button" class="btn btn-danger">Удалить</button></a></td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -33,4 +33,9 @@ class Group extends Model
     {
         return $this->hasMany(Student::class);
     }
+
+    public static function groupList(): array
+    {
+        return self::pluck('name', 'id')->toArray();
+    }
 }

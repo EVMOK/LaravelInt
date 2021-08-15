@@ -1,7 +1,7 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: e.a.mokrov
- * Date: 11.06.2021
- * Time: 10:06
- */
+<footer>
+    <div class="container">
+        <div class="border-top pt-3">
+            <p>&copy; {{ date('Y') }} - Студенты</p>
+        </div>
+    </div>
+</footer>

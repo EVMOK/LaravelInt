@@ -21,10 +21,12 @@ class StudentFactory extends Factory
      */
     public function definition(): array
     {
+        $groupsIds = Group::all()->pluck('id')->toArray();
+
         return [
             'name' => $this->faker->name(),
             'user_id' => User::factory(),
-            'group_id' => Group::factory(),
+            'group_id' => $groupsIds[array_rand($groupsIds)],
             'date_born' => date('Y-m-d'),
             'created_at' => now(),
             'updated_at' => now(),

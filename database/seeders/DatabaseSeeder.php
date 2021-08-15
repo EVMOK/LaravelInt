@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Discipline;
+use App\Models\Group;
+use App\Models\Score;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -26,6 +29,9 @@ class DatabaseSeeder extends Seeder
         ]);
         $user->assignRole('Admin');
 
-        Student::factory(10)->create();
+        Group::factory(10)->create();
+        Student::factory(50)->create();
+        Discipline::factory(5)->create();
+        Score::factory(100)->create();
     }
 }

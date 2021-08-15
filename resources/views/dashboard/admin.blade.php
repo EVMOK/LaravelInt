@@ -1,13 +1,14 @@
-<div class="w-full block mt-8">
-    <div class="w-full bg-gray-200 text-center border border-gray-300 px-8 py-6 rounded">
-        <h3 class="text-gray-700 uppercase font-bold">
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ route('groups.index') }}">Группы</a></li>
-                    <li><a href="{{ route('students.index') }}">Студенты</a></li>
-                </ul>
+<div class="mt-8 bg-white rounded">
+    <div class="w-full max-w-2xl px-6 py-12">
+        <div class="md:flex md:items-center mb-6">
+            <div class="md:w-1/3">
+                <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                    Количество студентов :
+                </label>
             </div>
-        </h3>
+            <div class="md:w-2/3">
+                <span class="text-gray-600 font-bold">{{ count($students) }}</span>
+            </div>
+        </div>
     </div>
 </div>

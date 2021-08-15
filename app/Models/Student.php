@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
@@ -43,8 +45,8 @@ class Student extends Model
     /**
      * Получить все оценки студента.
      */
-    public function scores(): BelongsToMany
+    public function scores(): HasMany
     {
-        return $this->belongsToMany(Score::class);
+        return $this->hasMany(Score::class);
     }
 }

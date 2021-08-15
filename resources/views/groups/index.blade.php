@@ -10,6 +10,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>Количество студентов</th>
                         <th>Группа</th>
                         <th>Редактировать</th>
                         <th>Удалить</th>
@@ -19,6 +20,7 @@
                     @foreach ($groups as $group)
                         <tr>
                             <td>{{ $group->id }}</td>
+                            <td>{{ $group->students_count }}</td>
                             <td><a href="{{ route('groups.show', $group->id) }}">{{ $group->name }}</a></td>
                             <td><a href="{{ route('groups.edit', $group->id) }}"><button type="button" class="btn btn-priamry">Редактировать</button></a></td>
                             <td><a href="{{ route('groups.destroy', $group->id) }}"><button type="button" class="btn btn-danger">Удалить</button></a></td>

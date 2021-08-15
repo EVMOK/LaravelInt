@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Discipline;
+use App\Models\Group;
+use App\Models\Score;
 use App\Models\Student;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
@@ -20,7 +22,7 @@ class StudentController extends Controller
      */
     public function index(): Factory|View|Application
     {
-        $students = Student::with('group')->latest()->paginate(10);
+        $students = Student::with('group')->latest()->paginate(5);
 
         return view('students.index', compact('students'));
     }
@@ -71,9 +73,7 @@ class StudentController extends Controller
      */
     public function show(Student $student): View|Factory|Application
     {
-        $class = Discipline::with('score')->where('id', $student->group_id)->first();
-
-        return view('students.show', compact('class', 'student'));
+        return view('students.show', compact('student'));
     }
 
     /**
@@ -84,7 +84,10 @@ class StudentController extends Controller
      */
     public function edit(Student $student): Factory|View|Application
     {
-        return view('students.edit', compact('student'));
+        $groups = Group::groupList();
+        $disciplines = Discipline::disciplinesList();
+
+        return view('students.edit', compact('student', 'groups', 'disciplines'));
     }
 
     /**
@@ -98,34 +101,28 @@ class StudentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $student->user_id,
-            'parent_id' => 'required|numeric',
-            'class_id' => 'required|numeric',
-            'roll_number' => 'required|numeric|unique:students,roll_number,' . $student->id,
-            'gender' => 'required|string',
-            'phone' => 'required|string|max:255',
-            'dateofbirth' => 'required|date',
-            'current_address' => 'required|string|max:255',
-            'permanent_address' => 'required|string|max:255'
+            'group' => 'required|numeric',
+            'date_born' => 'required|date',
         ]);
 
         $student->user()->update([
-            'name' => $request->name,
+            'name' => $request->username,
             'email' => $request->email,
         ]);
 
         $student->update([
-            'parent_id' => $request->parent_id,
-            'class_id' => $request->class_id,
-            'roll_number' => $request->roll_number,
-            'gender' => $request->gender,
-            'phone' => $request->phone,
-            'dateofbirth' => $request->dateofbirth,
-            'current_address' => $request->current_address,
-            'permanent_address' => $request->permanent_address
+            'group_id' => $request->group,
+            'name' => $request->name,
+            'date_born' => Carbon::parse($request->date_born)->format('Y-m-d'),
         ]);
 
-        return redirect()->route('student.index');
+        foreach ($request->scores as $score) {
+            Score::updateOrCreate(['id' => $score['id']], $score);
+        }
+
+        return redirect()->route('students.show', $student->id);
     }
 
     /**

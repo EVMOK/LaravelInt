@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateGroupsTable extends Migration
 {
+    private const TABLE_NAME = 'groups';
+
     /**
      * Загрузка любых служб приложения.
      *
@@ -13,7 +15,7 @@ class CreateGroupsTable extends Migration
      */
     public function boot()
     {
-        Schema::defaultStringLength(190);
+        Schema::defaultStringLength(191);
     }
 
     /**
@@ -23,16 +25,13 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
             $table->id();
             $table->string('name')->unique();
-
             $table->timestamps();
-
-            $table->index('name');
         });
     }
 
@@ -43,6 +42,6 @@ class CreateGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }
