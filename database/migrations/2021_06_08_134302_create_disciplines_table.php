@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateDisciplinesTable extends Migration
 {
+    private const TABLE_NAME = 'disciplines';
+
     /**
      * Загрузка любых служб приложения.
      *
@@ -13,7 +15,7 @@ class CreateDisciplinesTable extends Migration
      */
     public function boot()
     {
-        Schema::defaultStringLength(190);
+        Schema::defaultStringLength(191);
     }
     /**
      * Run the migrations.
@@ -22,11 +24,11 @@ class CreateDisciplinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('disciplines', function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
-            $table->id();
+            $table->smallIncrements('id');
             $table->string('name')->unique();
             $table->timestamps();
         });
@@ -39,6 +41,6 @@ class CreateDisciplinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('disciplines');
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }

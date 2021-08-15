@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
@@ -21,14 +25,19 @@ class Student extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'group_id', 'date_born'];
+    protected $fillable = ['name', 'group_id', 'date_born', 'user_id'];
 
     public $timestamps = true;
-    
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Получить группу студента.
      */
-    public function group()
+    public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class);
     }
@@ -36,8 +45,8 @@ class Student extends Model
     /**
      * Получить все оценки студента.
      */
-    public function scores()
+    public function scores(): HasMany
     {
-        return $this->belongsToMany(Score::class);
+        return $this->hasMany(Score::class);
     }
 }

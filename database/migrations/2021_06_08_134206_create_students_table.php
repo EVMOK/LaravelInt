@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateStudentsTable extends Migration
 {
+    private const TABLE_NAME = 'students';
+
     /**
      * Загрузка любых служб приложения.
      *
@@ -13,7 +15,7 @@ class CreateStudentsTable extends Migration
      */
     public function boot()
     {
-        Schema::defaultStringLength(190);
+        Schema::defaultStringLength(191);
     }
     /**
      * Run the migrations.
@@ -22,21 +24,16 @@ class CreateStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
-            $table->id();
+            $table->increments('id');
             $table->string('name');
-            $table->unsignedBigInteger('group_id');
-            $table->date('date_born');
+            $table->foreignId('group_id')->constrained('groups');
+            $table->date('date_born')->index();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
-
-            $table->index('name');
-            $table->index('date_born');
-
-            $table->foreign('group_id')
-                ->references('id')->on('groups');
         });
     }
 
@@ -47,9 +44,10 @@ class CreateStudentsTable extends Migration
      */
     public function down()
     {
-        $table = new Blueprint('students');
+        $table = new Blueprint(self::TABLE_NAME);
         $table->dropForeign('students_group_id_foreign');
+        $table->dropForeign('students_user_id_foreign');
 
-        Schema::dropIfExists('students');
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }
