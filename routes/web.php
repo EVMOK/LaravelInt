@@ -47,12 +47,15 @@ Route::group(['middleware' => ['auth','role:Admin']], function ()
     Route::put('/permission-update/{id}', [ RolePermissionController::class, 'updatePermission' ])->name('permission.update');
 
     Route::resource('assignrole', RoleAssign::class);
+
     Route::group(['prefix' => 'students', 'as' => 'students.'], function () {
         Route::get('/', [ StudentController::class, 'index' ])->name('index');
         Route::get('/show/{student}', [ StudentController::class, 'show' ])->name('show');
         Route::get('/edit/{student}', [ StudentController::class, 'edit' ])->name('edit');
         Route::put('/update/{student}', [ StudentController::class, 'update' ])->name('update');
         Route::delete('/destroy/{student}', [ StudentController::class, 'destroy' ])->name('delete');
+        Route::get('/journal', [ StudentController::class, 'journal' ])->name('journal');
     });
+
     Route::resource('groups', GroupController::class);
 });

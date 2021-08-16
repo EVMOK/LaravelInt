@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Http\Filters\QueryFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 
 class Group extends Model
 {
@@ -37,5 +39,14 @@ class Group extends Model
     public static function groupList(): array
     {
         return self::pluck('name', 'id')->toArray();
+    }
+
+    /**
+     * @param Builder $builder
+     * @param QueryFilter $filter
+     */
+    public function scopeFilter(Builder $builder, QueryFilter $filter)
+    {
+        $filter->apply($builder);
     }
 }

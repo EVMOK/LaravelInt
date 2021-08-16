@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\Filterable;
+use App\Http\Filters\GroupFilter;
 use App\Http\Requests\GroupRequest;
 use App\Models\Group;
 use App\Models\Student;
@@ -10,9 +12,12 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Request;
 
 class GroupController extends Controller
 {
+    use Filterable;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -21,9 +26,9 @@ class GroupController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Factory|View|Application
+    public function index(GroupFilter $filter): Factory|View|Application
     {
-        $groups = Group::withCount('students')->paginate(10);
+        $groups = Group::filter($filter)->withCount('students')->paginate(10);
 
         return view('groups.index', compact('groups'));
     }

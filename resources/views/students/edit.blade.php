@@ -68,11 +68,11 @@
                 <th>Оценка</th>
             </tr>
             <tr>
-                <td><input type="hidden" name="scores[0][id]" value="{{$score->id}}" /></td>
                 <td>{{Form::select('scores[0][discipline_id]', $disciplines, $score->discipline_id, ["class" => "form-control"])}}</td>
                 <td><input type="text" name="scores[0][value]" value="{{$score->value}}" placeholder="" class="form-control" /></td>
-                <td><input type="hidden" name="scores[0][student_id]" value="{{$student->id}}" /></td>
                 <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
+                <input type="hidden" class="d-none" name="scores[0][student_id]" value="{{$student->id}}" />
+                <input type="hidden" class="d-none" name="scores[0][id]" value="{{$score->id}}" />
             </tr>
             @endforeach
         </table>
@@ -103,8 +103,9 @@
                         @endforeach
                         '</select></td>' +
                     '<td><input type="text" name="scores['+i+'][value]" placeholder="" class="form-control" /></td>' +
-                    '<td><input type="hidden" name="scores['+i+'][student_id]" value="{{$student->id}}" /></td>' +
-                    '<td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>'
+                    '<td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>' +
+                    '<td><input type="hidden" class="d-none" name="scores['+i+'][student_id]" value="{{$student->id}}" /></td>' +
+                    '<td><input type="hidden" class="d-none" name="scores['+i+'][id]" value="{{$score->id}}" /></td>'
                 );
             });
             $(document).on('click', '.remove-tr', function(){

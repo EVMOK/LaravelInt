@@ -19,6 +19,11 @@
                             <i class="uil-car mr-1"></i>Студенты
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link arrow-none" href="{{ route('students.journal') }}" role="button" id="topnav-layouts" aria-haspopup="true" aria-expanded="false">
+                            <i class="uil-car mr-1"></i>Журнал
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
