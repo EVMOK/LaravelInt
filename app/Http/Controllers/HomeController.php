@@ -33,7 +33,7 @@ class HomeController extends Controller
 
         if ($user->hasRole('Admin')) {
 
-            $students = Student::latest()->get();
+            $students = Student::all();
 
             return view('home', compact('students'));
 
