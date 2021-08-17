@@ -49,11 +49,4 @@ class Student extends Model
     {
         return $this->hasMany(Score::class);
     }
-
-    public function score($student_id, $discipline_id)
-    {
-        $score = Score::where(['student_id' => $student_id])->where(['discipline_id' => $discipline_id])->first();
-
-        return $score ? $score['value'] : null;
-    }
 }
