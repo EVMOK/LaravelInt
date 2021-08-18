@@ -139,10 +139,10 @@ class StudentController extends Controller
 
     public function journal()
     {
-        $scores = Score::with(['discipline', 'student']);
         $disciplines = Discipline::all();
-        $students = Student::all();
+        $students = Student::all()->load('scores');
+        $scores = Score::all();
 
-        return view('students.journal', compact('scores', 'disciplines', 'students'));
+        return view('students.journal', compact('disciplines', 'students', 'scores'));
     }
 }
